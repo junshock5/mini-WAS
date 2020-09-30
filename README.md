@@ -2,7 +2,7 @@
 목적
 ---
 ### Java 로 간단한 WAS(Web Application Server)를 만드는 것
-### **java-network-programming 주소** <br/> https://in.finance.yahoo.com/quote/GOOG/history?p=GOOG&.tsrc=fin-srch
+### **java-network-programming 주소** <br/> https://www.oreilly.com/library/view/java-network-programming/9781449365936/
 
 사용 기술
 ---
