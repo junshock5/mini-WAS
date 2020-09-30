@@ -1,7 +1,7 @@
 # mini-WAS
 목적
 ---
-Java 로 간단한 WAS(Web Application Server)를 만드는 것
+### Java 로 간단한 WAS(Web Application Server)를 만드는 것
 ### **java-network-programming 주소** <br/> https://in.finance.yahoo.com/quote/GOOG/history?p=GOOG&.tsrc=fin-srch
 
 유의 사항
