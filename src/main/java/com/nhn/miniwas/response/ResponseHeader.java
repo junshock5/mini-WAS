@@ -8,7 +8,7 @@ import java.util.Map;
 public class ResponseHeader {
     private Map<String, String> headers = new HashMap<>();
 
-    void addWriteHeader(DataOutputStream dos) throws IOException {
+    public void addWriteHeader(DataOutputStream dos) throws IOException {
         for (String key : headers.keySet()) {
             dos.writeBytes(key + ": " + headers.get(key) + "\r\n");
         }

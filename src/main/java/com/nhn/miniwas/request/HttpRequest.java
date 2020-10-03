@@ -23,6 +23,10 @@ public class HttpRequest {
         return requestLine.getUrl();
     }
 
+    public String getVersion() {
+        return requestLine.getHttpVersion();
+    }
+
     public String getBody() {
         return requestBody.getBody();
     }
