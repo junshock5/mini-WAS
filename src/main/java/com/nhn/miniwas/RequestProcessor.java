@@ -38,10 +38,7 @@ public class RequestProcessor implements Runnable {
         logger.info("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
-//            HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
-//            Dispatcher dispatcher = new Dispatcher(httpRequest, httpResponse);
-//            dispatcher.dispatch();
+             HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
