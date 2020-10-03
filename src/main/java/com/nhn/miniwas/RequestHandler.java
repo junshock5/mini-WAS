@@ -15,10 +15,11 @@ import java.util.logging.Level;
 public class RequestHandler implements Runnable {
     private final static Logger logger = (Logger) LoggerFactory.getLogger(RequestHandler.class);
     private File rootDirectory;
+    private String documentDirectory;
     private String indexFileName;
     private Socket connection;
 
-    public RequestHandler(File rootDirectory, String indexFileName, Socket connection) {
+    public RequestHandler(File rootDirectory, String documentDirectory, String indexFileName, Socket connection) {
         if (rootDirectory.isFile()) {
             throw new IllegalArgumentException("rootDirectory must be a directory, not a file");
         }
@@ -29,6 +30,7 @@ public class RequestHandler implements Runnable {
         if (indexFileName != null)
             this.indexFileName = indexFileName;
         this.rootDirectory = rootDirectory;
+        this.documentDirectory = documentDirectory;
         this.connection = connection;
     }
 
@@ -40,7 +42,7 @@ public class RequestHandler implements Runnable {
             HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
             HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
 
-            sendDriectoryFile(httpRequest, httpResponse);
+            sendDirectoryFile(httpRequest, httpResponse);
 
             // sepc 1. host if progress
             // if(connection.getInetAddress() == "testAdress") {}
@@ -50,8 +52,10 @@ public class RequestHandler implements Runnable {
         }
     }
 
-    private void sendDriectoryFile(HttpRequest httpRequest, HttpResponse httpResponse) {
-        String root = rootDirectory.getPath();
+    private void sendDirectoryFile(HttpRequest httpRequest, HttpResponse httpResponse) {
+        // html 파일 경로
+        String documentDirectoryPath = rootDirectory.getPath() + documentDirectory;
+
         try {
             // 명령어 입력
             Reader in = new InputStreamReader(new BufferedInputStream(connection.getInputStream()), "UTF-8");
@@ -74,7 +78,7 @@ public class RequestHandler implements Runnable {
                     version = httpRequest.getVersion();
                 }
 
-                File file = new File(rootDirectory, fileName.substring(1, fileName.length()));
+                File file = new File(documentDirectoryPath, fileName.substring(1, fileName.length()));
 
                 // file.getAbsolutePath() 의 File.separator 개수가 rootDirectory 의 개수가 더 적을 경우 상위 경로 접근, 403 forbidden 처리
                 if (HttpRequestUtils.getRootSeparatorCount(file.getAbsolutePath()) < HttpRequestUtils.getRootSeparatorCount(rootDirectory.getAbsolutePath())) {
@@ -86,7 +90,7 @@ public class RequestHandler implements Runnable {
                 if (extension.equals("exe"))
                     httpResponse.forbidden(fileName);
 
-                if (file.canRead() && file.getCanonicalPath().startsWith(root)) {
+                if (file.canRead() && file.getCanonicalPath().startsWith(documentDirectoryPath)) {
                     // HTTP 1.1 버전 일때 처리
                     if (version.startsWith("/1.1"))
                         httpResponse.processFile(fileName);
