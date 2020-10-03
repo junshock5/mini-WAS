@@ -1,0 +1,2 @@
+04-10-2020 01:08:12.607 [35m[main][0;39m [34mINFO [0;39m com.nhn.miniwas.HttpServer.start - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+2020-10-04 01:09:09.751 [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was

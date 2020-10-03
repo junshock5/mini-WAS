@@ -48,7 +48,7 @@ public class RequestHandler implements Runnable {
             // if(connection.getInetAddress() == "testAdress") {}
 
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            logger.error(String.valueOf(e.getStackTrace()));
         }
     }
 
@@ -105,7 +105,7 @@ public class RequestHandler implements Runnable {
                 httpResponse.error(fileName);
             }
         } catch (IOException ex) {
-            logger.error("Level:{} Server could not start RemoteSocketAddress:{}, Exception:{}", Level.WARNING, connection.getRemoteSocketAddress(), ex);
+            logger.error("Level:{} Server could not start RemoteSocketAddress:{}, Exception:{}", Level.WARNING, connection.getRemoteSocketAddress(), ex.getStackTrace());
         } finally {
             try {
                 connection.close();

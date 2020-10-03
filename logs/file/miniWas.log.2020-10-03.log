@@ -1,0 +1,16 @@
+210  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+199  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+202  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+227  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+195  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+214  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+2115 [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+196  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+234  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+199  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+201  [main] ERROR com.nhn.miniwas.HttpServer - Level:WARNING Error accepting connection Exception:{}
+224  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+170  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+03-10-2020 23:05:26.296 [35m[main][0;39m [34mINFO [0;39m com.nhn.miniwas.HttpServer.start - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+03-10-2020 23:06:12.505 [35m[main][0;39m INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
+195  [main] INFO  com.nhn.miniwas.HttpServer - HostName:XL1041-P1, InetAddress:localhost/127.0.0.1, Port:80, DocumentRoot:C:\Users\topojs8\Downloads\mini-was
