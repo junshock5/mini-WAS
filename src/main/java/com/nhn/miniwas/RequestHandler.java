@@ -4,6 +4,7 @@ import com.nhn.miniwas.request.HttpRequest;
 import com.nhn.miniwas.request.HttpRequestGenerator;
 import com.nhn.miniwas.response.HttpResponse;
 import com.nhn.miniwas.response.HttpResponseGenerator;
+import com.nhn.miniwas.util.HttpRequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ public class RequestHandler implements Runnable {
             HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
             HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
 
-            sendDriectoryFile(httpRequest, httpResponse, out);
+            sendDriectoryFile(httpRequest, httpResponse);
 
             // sepc 1. host if progress
             // if(connection.getInetAddress() == "testAdress") {}
@@ -49,7 +50,7 @@ public class RequestHandler implements Runnable {
         }
     }
 
-    private void sendDriectoryFile(HttpRequest httpRequest, HttpResponse httpResponse, OutputStream outputStream) {
+    private void sendDriectoryFile(HttpRequest httpRequest, HttpResponse httpResponse) {
         String root = rootDirectory.getPath();
         try {
             // 명령어 입력
@@ -67,7 +68,7 @@ public class RequestHandler implements Runnable {
             if (httpRequest.getMethod().equals("GET")) {
                 logger.info("RemoteSocketAddress {}, {}", connection.getRemoteSocketAddress(), requestLine.toString());
 
-                if (fileName.endsWith("/")) fileName += indexFileName;
+                if (fileName.endsWith(File.separator)) fileName += indexFileName;
 
                 if (httpRequest.getVersion().length() > 2) {
                     version = httpRequest.getVersion();
@@ -75,10 +76,20 @@ public class RequestHandler implements Runnable {
 
                 File file = new File(rootDirectory, fileName.substring(1, fileName.length()));
 
+                // file.getAbsolutePath() 의 File.separator 개수가 rootDirectory 의 개수가 더 적을 경우 상위 경로 접근, 403 forbidden 처리
+                if (HttpRequestUtils.getRootSeparatorCount(file.getAbsolutePath()) < HttpRequestUtils.getRootSeparatorCount(rootDirectory.getAbsolutePath())) {
+                    httpResponse.forbidden(fileName);
+                }
+                // fileName의 확장자명이 .exe 일 경우 403 forbidden 처리
+                String[] result = fileName.split("\\.");
+                String extension = result[result.length - 1];
+                if (extension.equals("exe"))
+                    httpResponse.forbidden(fileName);
+
                 if (file.canRead() && file.getCanonicalPath().startsWith(root)) {
                     // HTTP 1.1 버전 일때 처리
                     if (version.startsWith("/1.1"))
-                    httpResponse.processFile(fileName);
+                        httpResponse.processFile(fileName);
 
                 } else {
                     // not found Directory file

@@ -6,7 +6,7 @@ public enum HttpStatusCode {
     UNAUTHORIZED("401 Unauthorized"),
     FORBIDDEN("403 Forbidden"),
     NOT_FOUND("404 Not Found"),
-    ERROR("501 Server Error");
+    ERROR("500 Internal Server Error");
 
     private String httpStatusNumber;
 

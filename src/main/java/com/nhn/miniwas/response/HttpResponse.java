@@ -44,6 +44,20 @@ public class HttpResponse {
         writeResponseMessage();
     }
 
+    public void forbidden(String url) {
+        addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.FORBIDDEN);
+        addHeader("Location", url);
+        addResponseDynamicBody("<HTML>\r\n" +
+                "<HEAD><TITLE>Forbidden</TITLE>\r\n" +
+                "</HEAD>\r\n" +
+                "<BODY>\r\n" +
+                "<H1>HTTP Error 403: Forbidden/H1>\r\n" +
+                "</BODY>\r\n" +
+                "</HTML>\r\n");
+        writeResponseMessage();
+        responseBody.responseBody(dataOutputStream);
+    }
+
     public void notFound(String url) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.NOT_FOUND);
         addHeader("Location", url);
@@ -65,7 +79,7 @@ public class HttpResponse {
                 "<HEAD><TITLE>Not Implemented</TITLE>\r\n" +
                 "</HEAD>\r\n" +
                 "<BODY>\r\n" +
-                "<H1>HTTP Error 501: Not Implemented</H1>\r\n" +
+                "<H1>HTTP Error 500: Internal Server Error</H1>\r\n" +
                 "</BODY>\r\n" +
                 "</HTML>\r\n");
         writeResponseMessage();
