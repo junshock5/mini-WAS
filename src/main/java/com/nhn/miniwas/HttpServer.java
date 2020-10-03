@@ -1,9 +1,13 @@
 package com.nhn.miniwas;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.ExecutorService;
@@ -14,15 +18,17 @@ public class HttpServer {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(HttpServer.class);
     private static final int NUM_THREADS = 50;
     private static final String INDEX_FILE = File.separator + "index.html";
+    private static int port;
+    public static JSONArray HtmlStatusCodeArray;
+    private static String documentDirectory;
     private final File rootDirectory;
-    private final int port;
 
-    public HttpServer(File rootDirectory, int port) throws IOException {
+    public HttpServer(File rootDirectory) throws IOException {
+
         if (!rootDirectory.isDirectory()) {
             throw new IOException(rootDirectory + " does not exist as a directory");
         }
         this.rootDirectory = rootDirectory;
-        this.port = port;
     }
 
     public void start() throws IOException {
@@ -34,7 +40,7 @@ public class HttpServer {
             while (true) {
                 try {
                     Socket connection = server.accept();
-                    Runnable r = new RequestHandler(rootDirectory, INDEX_FILE, connection);
+                    Runnable r = new RequestHandler(rootDirectory, documentDirectory, INDEX_FILE, connection);
                     pool.submit(r);
                 } catch (IOException ex) {
                     logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex);
@@ -43,23 +49,51 @@ public class HttpServer {
         }
     }
 
-    public static void main(String[] args) {
-        File docroot;
+    public static void settingJson(String rootDirtory) {
+        String jsonDirectory = rootDirtory + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "properties.json";
+        JSONParser parser = new JSONParser();
         try {
-            docroot = new File(args[0]);
+            Object obj = parser.parse(new FileReader(jsonDirectory));
+
+            // A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
+            JSONObject jsonObject = (JSONObject) obj;
+
+            try {
+                port = Integer.parseInt((String) jsonObject.get("Port"));
+                if (port < 0 || port > 65535) port = 80;
+                documentDirectory = (String) jsonObject.get("Root");
+            } catch (RuntimeException ex) {
+                port = 80;
+                documentDirectory = File.separator + "webapp";
+            }
+
+            // A JSON array. JSONObject supports java.util.List interface.
+            HtmlStatusCodeArray = (JSONArray) jsonObject.get("Html_Code_State_List");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        File rootDirectory;
+        String projectDirectory;
+
+        if (args[0] == null)
+            throw new RuntimeException("명령줄에 프로젝트 최상위 경로를 입력해주세요");
+        else
+            projectDirectory = args[0];
+
+        try {
+            rootDirectory = new File(projectDirectory);
+            settingJson(projectDirectory);
         } catch (ArrayIndexOutOfBoundsException ex) {
             System.out.println("Usage: java JHTTP docroot port");
             return;
         }
-        int port;
         try {
-            port = Integer.parseInt(args[1]);
-            if (port < 0 || port > 65535) port = 80;
-        } catch (RuntimeException ex) {
-            port = 80;
-        }
-        try {
-            HttpServer webserver = new HttpServer(docroot, port);
+            HttpServer webserver = new HttpServer(rootDirectory);
             webserver.start();
         } catch (IOException ex) {
             logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex);

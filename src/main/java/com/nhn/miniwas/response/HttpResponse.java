@@ -1,5 +1,6 @@
 package com.nhn.miniwas.response;
 
+import com.nhn.miniwas.HttpServer;
 import com.nhn.miniwas.util.HttpResponseUtils;
 
 import java.io.DataOutputStream;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,13 +49,7 @@ public class HttpResponse {
     public void forbidden(String url) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.FORBIDDEN);
         addHeader("Location", url);
-        addResponseDynamicBody("<HTML>\r\n" +
-                "<HEAD><TITLE>Forbidden</TITLE>\r\n" +
-                "</HEAD>\r\n" +
-                "<BODY>\r\n" +
-                "<H1>HTTP Error 403: Forbidden/H1>\r\n" +
-                "</BODY>\r\n" +
-                "</HTML>\r\n");
+        addResponseDynamicBody(makeHtmlByCode(HttpStatusCode.FORBIDDEN.getHttpStatusNumber().substring(0, 3)));
         writeResponseMessage();
         responseBody.responseBody(dataOutputStream);
     }
@@ -61,13 +57,7 @@ public class HttpResponse {
     public void notFound(String url) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.NOT_FOUND);
         addHeader("Location", url);
-        addResponseDynamicBody("<HTML>\r\n" +
-                "<HEAD><TITLE>File Not Found</TITLE>\r\n" +
-                "</HEAD>\r\n" +
-                "<BODY>\r\n" +
-                "<H1>HTTP Error 404: File Not Found</H1>\r\n" +
-                "</BODY>\r\n" +
-                "</HTML>\r\n");
+        addResponseDynamicBody(makeHtmlByCode(HttpStatusCode.NOT_FOUND.getHttpStatusNumber().substring(0, 3)));
         writeResponseMessage();
         responseBody.responseBody(dataOutputStream);
     }
@@ -75,13 +65,7 @@ public class HttpResponse {
     public void error(String url) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.ERROR);
         addHeader("Location", url);
-        addResponseDynamicBody("<HTML>\r\n" +
-                "<HEAD><TITLE>Not Implemented</TITLE>\r\n" +
-                "</HEAD>\r\n" +
-                "<BODY>\r\n" +
-                "<H1>HTTP Error 500: Internal Server Error</H1>\r\n" +
-                "</BODY>\r\n" +
-                "</HTML>\r\n");
+        addResponseDynamicBody(makeHtmlByCode(HttpStatusCode.ERROR.getHttpStatusNumber().substring(0, 3)));
         writeResponseMessage();
         responseBody.responseBody(dataOutputStream);
     }
@@ -115,5 +99,26 @@ public class HttpResponse {
 
     public void addHeader(String header, String value) {
         responseHeader.addHeader(header, value);
+    }
+
+    public String makeHtmlByCode(String HttpCode) {
+        String JsonValue = "";
+        String result = "";
+        for (int i = 0; i < HttpServer.HtmlStatusCodeArray.size(); i++) {
+            JSONObject jsonObj2 = (JSONObject) HttpServer.HtmlStatusCodeArray.get(i);
+            if ((String) jsonObj2.get(HttpCode) != null) {
+                JsonValue = (String) jsonObj2.get(HttpCode);
+                result = "<HTML>\r\n" +
+                        "<HEAD><TITLE> " + JsonValue + " </TITLE>\r\n" +
+                        "</HEAD>\r\n" +
+                        "<BODY>\r\n" +
+                        "<H1>HTTP Error " + HttpCode + " " + JsonValue + " </H1>\r\n" +
+                        "</BODY>\r\n" +
+                        "</HTML>\r\n";
+                return result;
+            }
+
+        }
+        return result;
     }
 }
