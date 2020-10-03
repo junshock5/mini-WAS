@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class HttpRequestUtils {
@@ -28,6 +29,16 @@ public class HttpRequestUtils {
      */
     public static Map<String, String> parseCookies(String cookies) {
         return parseValues(cookies, "; ");
+    }
+
+    /**
+     * @param 상위 경로 확인, 윈도우 '/', 맥 '\' 개수 리턴 형식
+     * @return
+     */
+    public static int getRootSeparatorCount(String direcotryRoot) {
+        String pattern = Pattern.quote(System.getProperty("file.separator"));
+        String[] tokens = direcotryRoot.split(pattern);
+        return tokens.length;
     }
 
     /**

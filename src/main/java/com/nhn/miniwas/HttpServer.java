@@ -13,7 +13,7 @@ import java.util.logging.Level;
 public class HttpServer {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(HttpServer.class);
     private static final int NUM_THREADS = 50;
-    private static final String INDEX_FILE = "/index.html";
+    private static final String INDEX_FILE = File.separator + "index.html";
     private final File rootDirectory;
     private final int port;
 
