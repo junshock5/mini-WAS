@@ -43,7 +43,7 @@ public class HttpServer {
                     Runnable r = new RequestHandler(rootDirectory, documentDirectory, INDEX_FILE, connection);
                     pool.submit(r);
                 } catch (IOException ex) {
-                    logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex);
+                    logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex.getStackTrace());
                 }
             }
         }
@@ -96,7 +96,7 @@ public class HttpServer {
             HttpServer webserver = new HttpServer(rootDirectory);
             webserver.start();
         } catch (IOException ex) {
-            logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex);
+            logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex.getStackTrace());
         }
     }
 }
