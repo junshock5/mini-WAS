@@ -10,13 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
-/**
- * Created by cybaek on 15. 5. 22..
- */
 public class HttpServer {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(HttpServer.class);
     private static final int NUM_THREADS = 50;
-    private static final String INDEX_FILE = "index.html";
+    private static final String INDEX_FILE = "/index.html";
     private final File rootDirectory;
     private final int port;
 
@@ -37,7 +34,7 @@ public class HttpServer {
             while (true) {
                 try {
                     Socket connection = server.accept();
-                    Runnable r = new RequestProcessor(rootDirectory, INDEX_FILE, connection);
+                    Runnable r = new RequestHandler(rootDirectory, INDEX_FILE, connection);
                     pool.submit(r);
                 } catch (IOException ex) {
                     logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex);
@@ -47,7 +44,6 @@ public class HttpServer {
     }
 
     public static void main(String[] args) {
-        // get the Document root
         File docroot;
         try {
             docroot = new File(args[0]);
@@ -55,7 +51,6 @@ public class HttpServer {
             System.out.println("Usage: java JHTTP docroot port");
             return;
         }
-        // set the port to listen on
         int port;
         try {
             port = Integer.parseInt(args[1]);

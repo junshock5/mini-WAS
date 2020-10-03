@@ -1,10 +1,10 @@
 package com.nhn.miniwas.util;
 
-public class PairUtils {
+public class Pair {
     public String key;
     public String value;
 
-    PairUtils(String key, String value) {
+    Pair(String key, String value) {
         this.key = key.trim();
         this.value = value.trim();
     }
@@ -34,7 +34,7 @@ public class PairUtils {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PairUtils other = (PairUtils) obj;
+        Pair other = (Pair) obj;
         if (key == null) {
             if (other.key != null)
                 return false;

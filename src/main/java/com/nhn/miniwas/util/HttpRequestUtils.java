@@ -50,7 +50,7 @@ public class HttpRequestUtils {
      * @param 구분자 ex) &,;
      * @return 구분자로 나뉜 문자 map
      */
-    static PairUtils getKeyValue(String keyValue, String regex) {
+    static Pair getKeyValue(String keyValue, String regex) {
         if (Strings.isNullOrEmpty(keyValue)) {
             return null;
         }
@@ -60,10 +60,10 @@ public class HttpRequestUtils {
             return null;
         }
 
-        return new PairUtils(tokens[0], tokens[1]);
+        return new Pair(tokens[0], tokens[1]);
     }
 
-    public static PairUtils parseHeader(String header) {
+    public static Pair parseHeader(String header) {
         return getKeyValue(header, ": ");
     }
 
