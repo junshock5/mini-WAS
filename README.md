@@ -65,9 +65,13 @@
   
 실행 방법
 ---
- - 1. 디렉터리 경로에 mvn clean package 실행 후
- - 2. java -jar mini-was-0.0.1-SNAPSHOT.jar C:\Users\topojs8\Downloads\mini-was (디렉터리 경로를 argument로 지정)
-
+ - 1. 디렉터리 경로에 mvn clean package 실행
+ - 2. target 경로에 있는 결과 jar파일 실행 및 argument지정 
+   - java -jar ..\mini-was-0.0.1-SNAPSHOT.jar C:\Users\topojs8\Downloads\mini-was (프로젝트 상위 경로)
+ - 3. URL 입력
+   - localhost:80/Time   
+   - localhost:80/Hello
+  
 참고
 ---
 ### **java-network-programming 주소** <br/> https://www.oreilly.com/library/view/java-network-programming/9781449365936/
