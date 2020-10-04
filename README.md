@@ -2,8 +2,7 @@
 목적
 ---
 ### Java 로 간단한 WAS(Web Application Server)를 만드는 것
-### **java-network-programming 주소** <br/> https://www.oreilly.com/library/view/java-network-programming/9781449365936/
-### **Java8 표준 라이브러리 주소** <br/> https://docs.oracle.com/javase/8/docs/api/
+
 사용 기술
 ---
 - Maven Project
@@ -54,4 +53,7 @@
   
 - JUnit4 테스트코드 작성
 
-
+참고
+---
+### **java-network-programming 주소** <br/> https://www.oreilly.com/library/view/java-network-programming/9781449365936/
+### **Java8 표준 라이브러리 주소** <br/> https://docs.oracle.com/javase/8/docs/api/
