@@ -45,7 +45,7 @@
         </plugins>
     </build>
     <name>mini-was</name>
-    <description>Demo project for mini-was</description>
+    <description>only java standard library for mini-was</description>
 
     <properties>
         <java.version>1.8</java.version>

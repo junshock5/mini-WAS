@@ -20,6 +20,7 @@ public class HttpServer {
     private static final String INDEX_FILE = File.separator + "index.html";
     private static int port;
     public static JSONArray HtmlStatusCodeArray;
+    public static JSONArray Controller_Mapping_List;
     private static String documentDirectory;
     private final File rootDirectory;
 
@@ -69,7 +70,7 @@ public class HttpServer {
 
             // A JSON array. JSONObject supports java.util.List interface.
             HtmlStatusCodeArray = (JSONArray) jsonObject.get("Html_Code_State_List");
-
+            Controller_Mapping_List = (JSONArray) jsonObject.get("Controller_Mapping_List");
         } catch (Exception e) {
             logger.error("settingJson {} ", e);
         }
