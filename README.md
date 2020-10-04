@@ -37,7 +37,9 @@
 - 보안 규칙
   - 상위 디렉터리 접근시 403 에러 처리
   - 확장자가 .exe 인 파일 요청시 403 에러처리
-  - 추후 규칙 추가 확장성 고려 (HttpStatusCode enum 클래스로 관리, json 파일의 Html_Code_State_List 값을 통해 HTML 타이틀 및 바디 생성)
+  - 추후 규칙 추가 확장성 고려 
+    - HttpStatusCode enum 클래스로 관리
+    - json 파일의 Html_Code_State_List 값을 통해 HTML 타이틀 및 바디 생성
   
 - Logback 로깅 작업 추가
   - 로그 파일을 하루 단위로 분리
