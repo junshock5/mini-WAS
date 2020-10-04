@@ -104,21 +104,22 @@ public class HttpResponse {
     public String makeHtmlByCode(String HttpCode) {
         String JsonValue = "";
         String result = "";
-        for (int i = 0; i < HttpServer.HtmlStatusCodeArray.size(); i++) {
-            JSONObject jsonObj2 = (JSONObject) HttpServer.HtmlStatusCodeArray.get(i);
-            if ((String) jsonObj2.get(HttpCode) != null) {
-                JsonValue = (String) jsonObj2.get(HttpCode);
-                result = "<HTML>\r\n" +
-                        "<HEAD><TITLE> " + JsonValue + " </TITLE>\r\n" +
-                        "</HEAD>\r\n" +
-                        "<BODY>\r\n" +
-                        "<H1>HTTP Error " + HttpCode + " " + JsonValue + " </H1>\r\n" +
-                        "</BODY>\r\n" +
-                        "</HTML>\r\n";
-                return result;
-            }
+        if (HttpServer.HtmlStatusCodeArray != null)
+            for (int i = 0; i < HttpServer.HtmlStatusCodeArray.size(); i++) {
+                JSONObject jsonObj2 = (JSONObject) HttpServer.HtmlStatusCodeArray.get(i);
+                if ((String) jsonObj2.get(HttpCode) != null) {
+                    JsonValue = (String) jsonObj2.get(HttpCode);
+                    result = "<HTML>\r\n" +
+                            "<HEAD><TITLE> " + JsonValue + " </TITLE>\r\n" +
+                            "</HEAD>\r\n" +
+                            "<BODY>\r\n" +
+                            "<H1>HTTP Error " + HttpCode + " " + JsonValue + " </H1>\r\n" +
+                            "</BODY>\r\n" +
+                            "</HTML>\r\n";
+                    return result;
+                }
 
-        }
+            }
         return result;
     }
 }

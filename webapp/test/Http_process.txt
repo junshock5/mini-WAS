@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 223
+
+<HTML>
+<HEAD><TITLE>Document test</TITLE></HEAD>
+<BODY><H1>Document test</H1>
+The document has moved to blog
+<A HREF="https://junshock5.tistory.com">https://junshock5.tistory.com</A>
+<p>Contact me</p>
+</BODY>
+</HTML>

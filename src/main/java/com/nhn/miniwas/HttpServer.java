@@ -93,8 +93,8 @@ public class HttpServer {
             return;
         }
         try {
-            HttpServer webserver = new HttpServer(rootDirectory);
-            webserver.start();
+            HttpServer httpServer = new HttpServer(rootDirectory);
+            httpServer.start();
         } catch (IOException ex) {
             logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex.getStackTrace());
         }
