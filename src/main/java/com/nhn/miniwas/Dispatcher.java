@@ -2,7 +2,7 @@ package com.nhn.miniwas;
 
 import com.nhn.miniwas.request.HttpRequest;
 import com.nhn.miniwas.response.HttpResponse;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Dispatcher {

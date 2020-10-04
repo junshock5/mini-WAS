@@ -1,11 +1,9 @@
 package com.nhn.miniwas;
 
-
-import com.nhn.miniwas.util.Pair;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
@@ -34,7 +32,7 @@ public class HttpServerTest {
             assertThat(root, is("\\webapp"));
 
         } catch (Exception e) {
-            logger.error(String.valueOf(e.getStackTrace()));
+            logger.error("settingJson {} ", e);
         }
 
     }

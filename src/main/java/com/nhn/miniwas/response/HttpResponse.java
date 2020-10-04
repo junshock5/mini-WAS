@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HttpResponse {
@@ -81,7 +81,7 @@ public class HttpResponse {
 
     public void process(String filePath) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.OK);
-        logger.info("filePath : {}", filePath);
+        logger.debug("filePath : {}", filePath);
         addResponseBody(filePath);
 
         addHeader("Content-Length", responseBody.getBodyLength());

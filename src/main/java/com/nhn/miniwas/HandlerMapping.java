@@ -1,16 +1,11 @@
 package com.nhn.miniwas;
 
 import com.nhn.miniwas.controller.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class HandlerMapping {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(HandlerMapping.class);
-
     private static Map<String, Controller> controllers = new HashMap<>();
 
     static {

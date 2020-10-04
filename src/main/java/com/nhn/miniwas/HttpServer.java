@@ -1,10 +1,10 @@
 package com.nhn.miniwas;
 
+import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileReader;
@@ -43,7 +43,7 @@ public class HttpServer {
                     Runnable r = new RequestHandler(rootDirectory, documentDirectory, INDEX_FILE, connection);
                     pool.submit(r);
                 } catch (IOException ex) {
-                    logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex.getStackTrace());
+                    logger.error("Level:{} Error accepting connection Exception:{}", Level.WARNING, ex);
                 }
             }
         }
@@ -71,7 +71,7 @@ public class HttpServer {
             HtmlStatusCodeArray = (JSONArray) jsonObject.get("Html_Code_State_List");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("settingJson {} ", e);
         }
     }
 
@@ -89,14 +89,14 @@ public class HttpServer {
             rootDirectory = new File(projectDirectory);
             settingJson(projectDirectory);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            System.out.println("Usage: java JHTTP docroot port");
+            logger.error("Usage: java JHTTP docroot port {} ", ex);
             return;
         }
         try {
             HttpServer httpServer = new HttpServer(rootDirectory);
             httpServer.start();
         } catch (IOException ex) {
-            logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex.getStackTrace());
+            logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex);
         }
     }
 }

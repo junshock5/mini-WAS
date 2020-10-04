@@ -5,7 +5,7 @@ import com.nhn.miniwas.request.HttpRequestGenerator;
 import com.nhn.miniwas.response.HttpResponse;
 import com.nhn.miniwas.response.HttpResponseGenerator;
 import com.nhn.miniwas.util.HttpRequestUtils;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -22,9 +22,11 @@ public class RequestHandler implements Runnable {
         if (rootDirectory.isFile()) {
             throw new IllegalArgumentException("rootDirectory must be a directory, not a file");
         }
+
         try {
             rootDirectory = rootDirectory.getCanonicalFile();
-        } catch (IOException ex) {
+        } catch (IOException e) {
+            logger.error("RequestHandler init {} ", e);
         }
         if (indexFileName != null)
             this.indexFileName = indexFileName;
@@ -35,7 +37,7 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        logger.info("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
+        logger.debug("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
