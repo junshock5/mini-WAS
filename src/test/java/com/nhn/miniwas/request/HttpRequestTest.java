@@ -21,7 +21,7 @@ public class HttpRequestTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-        httpRequest = HttpRequestGenerator.createHttpRequest(new ByteArrayInputStream(httpHeader.getBytes()));
+        httpRequest = HttpRequestFactory.createHttpRequest(new ByteArrayInputStream(httpHeader.getBytes()));
     }
 
     @Test

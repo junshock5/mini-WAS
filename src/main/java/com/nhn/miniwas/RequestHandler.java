@@ -1,9 +1,9 @@
 package com.nhn.miniwas;
 
 import com.nhn.miniwas.request.HttpRequest;
-import com.nhn.miniwas.request.HttpRequestGenerator;
+import com.nhn.miniwas.request.HttpRequestFactory;
 import com.nhn.miniwas.response.HttpResponse;
-import com.nhn.miniwas.response.HttpResponseGenerator;
+import com.nhn.miniwas.response.HttpResponseFactory;
 import com.nhn.miniwas.util.HttpRequestUtils;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +41,8 @@ public class RequestHandler implements Runnable {
         logger.debug("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
-            HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
+            HttpRequest httpRequest = HttpRequestFactory.createHttpRequest(in);
+            HttpResponse httpResponse = HttpResponseFactory.createHttpResponse(out);
 
             checkUpperDirectoryFileExtension(httpRequest, httpResponse);
 

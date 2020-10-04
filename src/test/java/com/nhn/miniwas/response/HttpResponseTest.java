@@ -13,37 +13,37 @@ public class HttpResponseTest {
 
     @Test
     public void sendRedirect() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_Redirect.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_Redirect.txt"));
         httpResponse.sendRedirect("/index.html");
     }
 
     @Test
     public void forbidden() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_forbidden.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_forbidden.txt"));
         httpResponse.forbidden("/index.html");
     }
 
     @Test
     public void notFound() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_notFound.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_notFound.txt"));
         httpResponse.notFound("/index.html");
     }
 
     @Test
     public void error() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_error.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_error.txt"));
         httpResponse.error("/index.html");
     }
 
     @Test
     public void process() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_process.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_process.txt"));
         httpResponse.process("/index.html");
     }
 
     @Test
     public void processBody() throws FileNotFoundException {
-        httpResponse = HttpResponseGenerator.createHttpResponse(createOutputStream("Http_processBody.txt"));
+        httpResponse = HttpResponseFactory.createHttpResponse(createOutputStream("Http_processBody.txt"));
         httpResponse.processBody("/index.html");
     }
 
