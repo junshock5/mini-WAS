@@ -1,7 +1,7 @@
 # mini-WAS
 목적
 ---
-### Java로 간단한 WAS(Web Application Server)를 만드는 것
+- ### Java로 간단한 WAS(Web Application Server)를 만드는 것
 
 사용 기술
 ---
