@@ -1,6 +1,7 @@
 {
   "Port": "80",
   "Root": "\\src\\main\\resources\\webapp",
+  "NUM_THREADS": "50",
   "Html_Code_State_List": [
     {"200": "OK"},
     {"302": "Found"},
@@ -10,6 +11,6 @@
     {"500": "Internal Server Error"}
   ],
   "Controller_Mapping_List": [
-    "Hello","Time"
+    "Hello","service.Hello","Time","service.Time"
   ]
 }

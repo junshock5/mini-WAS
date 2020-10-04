@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class HandlerMapping {
     private static Map<String, Controller> controllers = new HashMap<>();
+    private static DefaultController defaultController = new DefaultController();
 
     static {
         controllers.put("/index", new HomeController());
@@ -15,7 +16,6 @@ public class HandlerMapping {
             Iterator<String> iterator = HttpServer.Controller_Mapping_List.iterator();
             while (iterator.hasNext()) {
                 controllers.put("/" + iterator.next(), new TimeController());
-                controllers.put("/service." + iterator.next(), new TimeController());
             }
         }
 
@@ -27,6 +27,6 @@ public class HandlerMapping {
                 return controllers.get(key);
             }
         }
-        return new DefaultController();
+        return defaultController;
     }
 }

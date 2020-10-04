@@ -16,25 +16,33 @@ import java.util.logging.Level;
 
 public class HttpServer {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(HttpServer.class);
-    private static final int NUM_THREADS = 50;
+
+    // 프로젝트 상위 경로, index 파일명 설정
     private static final String INDEX_FILE = File.separator + "index.html";
-    private static int port;
-    public static JSONArray HtmlStatusCodeArray;
-    public static JSONArray Controller_Mapping_List;
-    private static String documentDirectory;
     private final File rootDirectory;
 
-    public HttpServer(File rootDirectory) throws IOException {
+    // json 파일 설정
+    private static int port;
+    private static int numThreads;
+    private final ExecutorService pool;
+    private static String documentDirectory;
+
+    public static JSONArray HtmlStatusCodeArray;
+    public static JSONArray Controller_Mapping_List;
+
+    public HttpServer(File rootDirectory, String projectDirectory) throws IOException {
+        // json 파일 설정정
+        settingJson(projectDirectory);
+
+        this.pool = Executors.newFixedThreadPool(numThreads);
+        this.rootDirectory = rootDirectory;
 
         if (!rootDirectory.isDirectory()) {
             throw new IOException(rootDirectory + " does not exist as a directory");
         }
-        this.rootDirectory = rootDirectory;
     }
 
     public void start() throws IOException {
-        ExecutorService pool = Executors.newFixedThreadPool(NUM_THREADS);
-
         try (ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName("localhost"))) {
             logger.info("HostName:{}, InetAddress:{}, Port:{}, DocumentRoot:{}",
                     InetAddress.getLocalHost().getHostName(), server.getInetAddress(), server.getLocalPort(), rootDirectory);
@@ -50,8 +58,8 @@ public class HttpServer {
         }
     }
 
-    public static void settingJson(String rootDirtory) {
-        String jsonDirectory = rootDirtory + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "properties.json";
+    private static void settingJson(String rootDirectory) {
+        String jsonDirectory = rootDirectory + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "properties.json";
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader(jsonDirectory));
@@ -61,6 +69,7 @@ public class HttpServer {
 
             try {
                 port = Integer.parseInt((String) jsonObject.get("Port"));
+                numThreads = Integer.parseInt((String) jsonObject.get("NUM_THREADS"));
                 if (port < 0 || port > 65535) port = 80;
                 documentDirectory = (String) jsonObject.get("Root");
             } catch (RuntimeException ex) {
@@ -88,13 +97,12 @@ public class HttpServer {
 
         try {
             rootDirectory = new File(projectDirectory);
-            settingJson(projectDirectory);
         } catch (ArrayIndexOutOfBoundsException ex) {
             logger.error("Usage: java JHTTP docroot port {} ", ex);
             return;
         }
         try {
-            HttpServer httpServer = new HttpServer(rootDirectory);
+            HttpServer httpServer = new HttpServer(rootDirectory, projectDirectory);
             httpServer.start();
         } catch (IOException ex) {
             logger.error("Level:{} Server could not start Exception:{}", Level.SEVERE, ex);
