@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 public class HttpResponseTest {
     private HttpResponse httpResponse;
-    private String testDirectory = "./webapp/test/";
+    private String testDirectory = "./src/main/resources/webapp/test/";
 
     @Test
     public void sendRedirect() throws FileNotFoundException {

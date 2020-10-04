@@ -1,6 +1,6 @@
 {
   "Port": "80",
-  "Root": "\\webapp",
+  "Root": "\\src\\main\\resources\\webapp",
   "Html_Code_State_List": [
     {"200": "OK"},
     {"302": "Found"},

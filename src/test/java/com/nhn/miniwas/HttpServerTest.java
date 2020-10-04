@@ -29,7 +29,7 @@ public class HttpServerTest {
             assertThat(port, is(80));
 
             root = (String) jsonObject.get("Root");
-            assertThat(root, is("\\webapp"));
+            assertThat(root, is("\\src\\main\\resources\\webapp"));
 
         } catch (Exception e) {
             logger.error("settingJson {} ", e);

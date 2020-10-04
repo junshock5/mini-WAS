@@ -30,7 +30,7 @@ public class HttpResponse {
 
     private void addResponseBody(String url) {
         try {
-            this.responseBody = new ResponseBody(Files.readAllBytes(Paths.get("./webapp" + url)));
+            this.responseBody = new ResponseBody(Files.readAllBytes(Paths.get("./src/main/resources/webapp" + url)));
         } catch (IOException e) {
             e.printStackTrace();
         }
