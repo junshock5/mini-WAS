@@ -8,6 +8,7 @@
 - Maven Project
 - Java8
 - JUnit4
+- assertj
 - Logback
 - HTTP/1.1(모작)
 - Json
