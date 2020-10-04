@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
 
 public class RequestHandler implements Runnable {
     private final static Logger logger = (Logger) LoggerFactory.getLogger(RequestHandler.class);
@@ -42,76 +41,52 @@ public class RequestHandler implements Runnable {
             HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
             HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
 
-            sendDirectoryFile(httpRequest, httpResponse);
+            checkUpperDirectoryFileExtension(httpRequest, httpResponse);
 
-            // sepc 1. host if progress
+            // spec 1. host if progress
             // if(connection.getInetAddress() == "testAdress") {}
+
+            Dispatcher dispatcher = new Dispatcher(httpRequest, httpResponse);
+            dispatcher.dispatch();
 
         } catch (IOException e) {
             logger.error(String.valueOf(e.getStackTrace()));
         }
     }
 
-    private void sendDirectoryFile(HttpRequest httpRequest, HttpResponse httpResponse) {
-        // html 파일 경로
+    private void checkUpperDirectoryFileExtension(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        logger.info("RemoteSocketAddress {}", connection.getRemoteSocketAddress());
+
+        // html 파일 경로 \webapp 추가.
         String documentDirectoryPath = rootDirectory.getPath() + documentDirectory;
+        String fileName = httpRequest.getPath();
 
-        try {
-            // 명령어 입력
-            Reader in = new InputStreamReader(new BufferedInputStream(connection.getInputStream()), "UTF-8");
-            StringBuilder requestLine = new StringBuilder();
-            while (true) {
-                int c = in.read();
-                if (c == '\r' || c == '\n')
-                    break;
-                requestLine.append((char) c);
+        if (httpRequest.getMethod().equals("GET")) {
+            if (fileName.endsWith(File.separator)) fileName += indexFileName;
+            File file = new File(documentDirectoryPath, fileName.substring(1, fileName.length()));
+
+            // spec 4. file.getAbsolutePath() 의 File.separator 개수가 rootDirectory 의 개수가 더 적을 경우 상위 경로 접근, 403 forbidden 처리
+            if (HttpRequestUtils.getRootSeparatorCount(file.getAbsolutePath()) < HttpRequestUtils.getRootSeparatorCount(rootDirectory.getAbsolutePath())) {
+                httpResponse.forbidden(fileName);
             }
 
-            String version = "";
-            String fileName = httpRequest.getPath();
-            if (httpRequest.getMethod().equals("GET")) {
-                logger.info("RemoteSocketAddress {}, {}", connection.getRemoteSocketAddress(), requestLine.toString());
+            // spec 4. fileName의 확장자명이 .exe 일 경우 403 forbidden 처리
+            String[] result = fileName.split("\\.");
+            String extension = result[result.length - 1];
 
-                if (fileName.endsWith(File.separator)) fileName += indexFileName;
+            if (extension.equals("exe"))
+                httpResponse.forbidden(fileName);
 
-                if (httpRequest.getVersion().length() > 2) {
-                    version = httpRequest.getVersion();
-                }
-
-                File file = new File(documentDirectoryPath, fileName.substring(1, fileName.length()));
-
-                // file.getAbsolutePath() 의 File.separator 개수가 rootDirectory 의 개수가 더 적을 경우 상위 경로 접근, 403 forbidden 처리
-                if (HttpRequestUtils.getRootSeparatorCount(file.getAbsolutePath()) < HttpRequestUtils.getRootSeparatorCount(rootDirectory.getAbsolutePath())) {
-                    httpResponse.forbidden(fileName);
-                }
-                // fileName의 확장자명이 .exe 일 경우 403 forbidden 처리
-                String[] result = fileName.split("\\.");
-                String extension = result[result.length - 1];
-                if (extension.equals("exe"))
-                    httpResponse.forbidden(fileName);
-
-                if (file.canRead() && file.getCanonicalPath().startsWith(documentDirectoryPath)) {
-                    // HTTP 1.1 버전 일때 처리
-                    if (version.startsWith("/1.1"))
-                        httpResponse.processFile(fileName);
-
-                } else {
-                    // not found Directory file
-                    httpResponse.notFound(fileName);
-                }
-
+            if (file.canRead() && file.getCanonicalPath().startsWith(documentDirectoryPath)) {
+                // 정상 처리 구간 이지만 Dispatcher 가 처리 한다
             } else {
-                // method does not equal "GET"
-                httpResponse.error(fileName);
+                // not found Directory file
+                httpResponse.notFound(fileName);
             }
-        } catch (IOException ex) {
-            logger.error("Level:{} Server could not start RemoteSocketAddress:{}, Exception:{}", Level.WARNING, connection.getRemoteSocketAddress(), ex.getStackTrace());
-        } finally {
-            try {
-                connection.close();
-            } catch (IOException ex) {
-            }
+        } else {
+            // method does not equal "GET"
+            httpResponse.error(fileName);
         }
-    }
 
+    }
 }

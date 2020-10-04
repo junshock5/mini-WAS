@@ -79,7 +79,7 @@ public class HttpResponse {
         }
     }
 
-    public void processFile(String filePath) {
+    public void process(String filePath) {
         addStatusLine(HttpResponseUtils.HTTP_VERSION_1_1, HttpStatusCode.OK);
         logger.info("filePath : {}", filePath);
         addResponseBody(filePath);
