@@ -55,6 +55,13 @@
   - Default, Home, Hello, Time Controller 작성
   
 - JUnit4 테스트 코드 작성
+  - makeHtmlByCode null 조건 추가
+  - HttpRequestTest Get header,method,path,version 테스트 작성
+  - HttpResponseTest Redirect,forbidden,notfound,error,process,body 메서드 테스트 작성
+  - HttpRequestUtilsTest 쿼리스트링, 경로 구분자 개수 반환 메서드, 키벨류 가져오는값, header 파싱 테스트 작성
+  - IOUtilsTest 파일에 쓴 데이터 확인하는 테스트 작성
+  - HttpServerTest settingJson시 포트, 루트정보 테스트 작성
+  - RequestHandlerTest 상위경로 요청인지, 파일확장자가 exe인지 테스트 작성
 
 참고
 ---
