@@ -47,14 +47,14 @@
   - 로그 내용에 따라 적절한 로그 레벨 적용 (error, info 분리)
   - 오류 발생 시, StackTrace 전체를 로그 파일 쓰기
   
-- 간단한 WAS 를 구현
+- 간단한 WAS 구현
   - RequestHandler 에서 checkUpperDirectoryFileExtension 함수 분리
   - HandlerMapping 에서 url 에 따른 컨트롤러를 Dispatcher에서 생성하게끔 작성
   - Dispatcher 에서 Hander에서 작성한 url을 찾아서 Controller 의 method 에 따라 실행
   - Controller 인터페이스 작성 및 추상 구현체에 Content-Type 작성
   - Default, Home, Hello, Time Controller 작성
   
-- JUnit4 테스트코드 작성
+- JUnit4 테스트 코드 작성
 
 참고
 ---
