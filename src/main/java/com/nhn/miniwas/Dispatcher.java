@@ -5,6 +5,8 @@ import com.nhn.miniwas.response.HttpResponse;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
+
 public class Dispatcher {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Dispatcher.class);
 
@@ -16,7 +18,7 @@ public class Dispatcher {
         this.httpResponse = httpResponse;
     }
 
-    public void dispatch() {
+    public void dispatch() throws ParseException {
         logger.debug("requestLine : {}", httpRequest.getPath());
         HandlerMapping.findController(httpRequest.getPath()).service(httpRequest, httpResponse);
     }

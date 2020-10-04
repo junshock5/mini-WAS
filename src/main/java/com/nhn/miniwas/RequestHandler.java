@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.ParseException;
 
 public class RequestHandler implements Runnable {
     private final static Logger logger = (Logger) LoggerFactory.getLogger(RequestHandler.class);
@@ -51,7 +52,7 @@ public class RequestHandler implements Runnable {
             Dispatcher dispatcher = new Dispatcher(httpRequest, httpResponse);
             dispatcher.dispatch();
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             logger.error(String.valueOf(e.getStackTrace()));
         }
     }
