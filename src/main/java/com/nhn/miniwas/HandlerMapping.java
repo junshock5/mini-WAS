@@ -12,6 +12,8 @@ public class HandlerMapping {
 
     static {
         controllers.put("/index", new HomeController());
+
+        // spec 6. json Controller_Mapping_List 값에 따라 추가 맵핑 됩니다.
         if (HttpServer.Controller_Mapping_List != null) {
             Iterator<String> iterator = HttpServer.Controller_Mapping_List.iterator();
             while (iterator.hasNext()) {

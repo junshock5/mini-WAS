@@ -21,7 +21,7 @@ public class HttpServer {
     private static final String INDEX_FILE = File.separator + "index.html";
     private final File rootDirectory;
 
-    // json 파일 설정
+    // spec 2. json 파일 설정
     private static int port;
     private static int numThreads;
     private final ExecutorService pool;
