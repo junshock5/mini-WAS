@@ -8,6 +8,7 @@
 - Maven Project
 - Java8
 - JUnit4
+- assertj
 - Logback
 - HTTP/1.1(모작)
 - Json
@@ -46,14 +47,21 @@
   - 로그 내용에 따라 적절한 로그 레벨 적용 (error, info 분리)
   - 오류 발생 시, StackTrace 전체를 로그 파일 쓰기
   
-- 간단한 WAS 를 구현
+- 간단한 WAS 구현
   - RequestHandler 에서 checkUpperDirectoryFileExtension 함수 분리
   - HandlerMapping 에서 url 에 따른 컨트롤러를 Dispatcher에서 생성하게끔 작성
   - Dispatcher 에서 Hander에서 작성한 url을 찾아서 Controller 의 method 에 따라 실행
   - Controller 인터페이스 작성 및 추상 구현체에 Content-Type 작성
   - Default, Home, Hello, Time Controller 작성
   
-- JUnit4 테스트코드 작성
+- JUnit4 테스트 코드 작성
+  - makeHtmlByCode null 조건 추가
+  - HttpRequestTest Get header,method,path,version 테스트 작성
+  - HttpResponseTest Redirect,forbidden,notfound,error,process,body 메서드 테스트 작성
+  - HttpRequestUtilsTest 쿼리스트링, 경로 구분자 개수 반환 메서드, 키벨류 가져오는값, header 파싱 테스트 작성
+  - IOUtilsTest 파일에 쓴 데이터 확인하는 테스트 작성
+  - HttpServerTest settingJson시 포트, 루트정보 테스트 작성
+  - RequestHandlerTest 상위경로 요청인지, 파일확장자가 exe인지 테스트 작성
 
 참고
 ---
