@@ -62,7 +62,18 @@
   - IOUtilsTest 파일에 쓴 데이터 확인하는 테스트 작성
   - HttpServerTestsettingJson 시 포트, 루트 정보 테스트 작성
   - RequestHandlerTest 상위경로 요청인지, 파일 확장자가 exe인지 테스트 작성
-
+  
+ - 프로젝트 주석에 문제에 명시된 것을 // spec 1. ~ 7. 으로 명시하였습니다.
+  
+실행 방법
+---
+ - 1. 디렉터리 경로에 mvn clean package 실행
+ - 2. target 경로에 있는 결과 jar파일 실행 및 argument지정 
+   - java -jar ..\mini-was-0.0.1-SNAPSHOT.jar C:\Users\topojs8\Downloads\mini-was (프로젝트 상위 경로)
+ - 3. URL 입력
+   - localhost:80/Time   
+   - localhost:80/Hello
+  
 참고
 ---
 ### **java-network-programming 주소** <br/> https://www.oreilly.com/library/view/java-network-programming/9781449365936/
