@@ -65,8 +65,8 @@
   
 실행 방법
 ---
- - 1 디렉터리 경로에 mvn clean package 실행 후
- - 2 java -jar mini-was-0.0.1-SNAPSHOT.jar C:\Users\topojs8\Downloads\mini-was (디렉터리 경로를 argumnet로 지정)
+ - 1. 디렉터리 경로에 mvn clean package 실행 후
+ - 2. java -jar mini-was-0.0.1-SNAPSHOT.jar C:\Users\topojs8\Downloads\mini-was (디렉터리 경로를 argument로 지정)
 
 참고
 ---
