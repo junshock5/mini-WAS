@@ -35,3 +35,4 @@ build/
 /.mvn/
 /mvnw.cmd
 /mvnw
+/logs/
