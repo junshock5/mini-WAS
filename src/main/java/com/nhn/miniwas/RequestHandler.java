@@ -63,7 +63,7 @@ public class RequestHandler implements Runnable {
         String documentDirectoryPath = rootDirectory.getPath() + documentDirectory;
         String fileName = httpRequest.getPath();
 
-        if (httpRequest.getMethod().equals("GET")) {
+        if ("GET".equals(httpRequest.getMethod())) {
             if (fileName.endsWith(File.separator)) fileName += indexFileName;
             File file = new File(documentDirectoryPath, fileName.substring(1, fileName.length()));
 
@@ -76,7 +76,7 @@ public class RequestHandler implements Runnable {
             String[] result = fileName.split("\\.");
             String extension = result[result.length - 1];
 
-            if (extension.equals("exe"))
+            if ("exe".equals(extension))
                 httpResponse.forbidden(fileName);
 
             if (file.canRead() && file.getCanonicalPath().startsWith(documentDirectoryPath)) {

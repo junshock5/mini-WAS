@@ -42,7 +42,7 @@ public class RequestHandlerTest {
         // fileName의 확장자명이 .exe 인지 확인
         String[] result = fileName.split("\\.");
         String extension = result[result.length - 1];
-        assertFalse(extension.equals("exe"));
+        assertFalse("exe".equals(extension));
     }
 
 }
