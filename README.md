@@ -63,8 +63,6 @@
   - HttpServerTestsettingJson 시 포트, 루트 정보 테스트 작성
   - RequestHandlerTest 상위경로 요청인지, 파일 확장자가 exe인지 테스트 작성
   
- - 프로젝트 주석에 문제에 명시된 것을 // spec 1. ~ 7. 으로 명시하였습니다.
-  
 실행 방법
 ---
  - 1. 디렉터리 경로에 mvn clean package 실행
