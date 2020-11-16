@@ -4,28 +4,21 @@ package com.nhn.miniwas.controller;
 import com.nhn.miniwas.request.HttpRequest;
 import com.nhn.miniwas.response.HttpResponse;
 
-public abstract class AbstractController implements Controller {
-    protected final static String CONTENT_TYPE = "Content-Type";
-    protected final static String CSS_CONTENT_TYPE = "text/css; charset=utf-8";
-    protected final static String HTML_CONTENT_TYPE = "text/html; charset=utf-8";
-    protected final static String JS_CONTENT_TYPE = "text/javascript; charset=utf-8";
-    protected final static String FONT_CONTENT_TYPE = "application/x-font-ttf";
-    protected final static String ICON_CONTENT_TYPE = "image/x-icon";
+import java.text.ParseException;
 
+public abstract class AbstractController implements Controller {
     @Override
-    public void service(HttpRequest httpRequest, HttpResponse httpResponse) {
-        if (httpRequest.getMethod().equals("GET")) {
+    public void service(HttpRequest httpRequest, HttpResponse httpResponse) throws ParseException {
+        if ("GET" .equals(httpRequest.getMethod())) {
             doGet(httpRequest, httpResponse);
         }
 
-        if (httpRequest.getMethod().equals("POST")) {
+        if ("POST" .equals(httpRequest.getMethod())) {
             doPost(httpRequest, httpResponse);
         }
     }
 
-    public void doGet(HttpRequest httpRequest, HttpResponse httpResponse) {
-    }
+    abstract void doGet(HttpRequest httpRequest, HttpResponse httpResponse) throws ParseException;
 
-    public void doPost(HttpRequest httpRequest, HttpResponse httpResponse) {
-    }
+    abstract void doPost(HttpRequest httpRequest, HttpResponse httpResponse);
 }

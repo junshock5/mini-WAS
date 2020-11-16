@@ -1,15 +1,16 @@
 package com.nhn.miniwas;
 
 import com.nhn.miniwas.request.HttpRequest;
-import com.nhn.miniwas.request.HttpRequestGenerator;
+import com.nhn.miniwas.request.HttpRequestFactory;
 import com.nhn.miniwas.response.HttpResponse;
-import com.nhn.miniwas.response.HttpResponseGenerator;
+import com.nhn.miniwas.response.HttpResponseFactory;
 import com.nhn.miniwas.util.HttpRequestUtils;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.ParseException;
 
 public class RequestHandler implements Runnable {
     private final static Logger logger = (Logger) LoggerFactory.getLogger(RequestHandler.class);
@@ -22,9 +23,11 @@ public class RequestHandler implements Runnable {
         if (rootDirectory.isFile()) {
             throw new IllegalArgumentException("rootDirectory must be a directory, not a file");
         }
+
         try {
             rootDirectory = rootDirectory.getCanonicalFile();
-        } catch (IOException ex) {
+        } catch (IOException e) {
+            logger.error("RequestHandler init {} ", e);
         }
         if (indexFileName != null)
             this.indexFileName = indexFileName;
@@ -35,11 +38,11 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        logger.info("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
+        logger.debug("NewClientConnect!ConnectedIP:{},Port:{}", connection.getInetAddress(), connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            HttpRequest httpRequest = HttpRequestGenerator.createHttpRequest(in);
-            HttpResponse httpResponse = HttpResponseGenerator.createHttpResponse(out);
+            HttpRequest httpRequest = HttpRequestFactory.createHttpRequest(in);
+            HttpResponse httpResponse = HttpResponseFactory.createHttpResponse(out);
 
             checkUpperDirectoryFileExtension(httpRequest, httpResponse);
 
@@ -49,7 +52,7 @@ public class RequestHandler implements Runnable {
             Dispatcher dispatcher = new Dispatcher(httpRequest, httpResponse);
             dispatcher.dispatch();
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             logger.error(String.valueOf(e.getStackTrace()));
         }
     }
@@ -61,7 +64,7 @@ public class RequestHandler implements Runnable {
         String documentDirectoryPath = rootDirectory.getPath() + documentDirectory;
         String fileName = httpRequest.getPath();
 
-        if (httpRequest.getMethod().equals("GET")) {
+        if ("GET".equals(httpRequest.getMethod())) {
             if (fileName.endsWith(File.separator)) fileName += indexFileName;
             File file = new File(documentDirectoryPath, fileName.substring(1, fileName.length()));
 
@@ -74,7 +77,7 @@ public class RequestHandler implements Runnable {
             String[] result = fileName.split("\\.");
             String extension = result[result.length - 1];
 
-            if (extension.equals("exe"))
+            if ("exe".equals(extension))
                 httpResponse.forbidden(fileName);
 
             if (file.canRead() && file.getCanonicalPath().startsWith(documentDirectoryPath)) {

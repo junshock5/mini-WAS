@@ -2,11 +2,8 @@ package com.nhn.miniwas.response;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ResponseBody {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(ResponseBody.class);
     private byte[] body;
 
     public ResponseBody(byte[] body) {

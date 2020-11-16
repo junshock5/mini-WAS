@@ -1,24 +1,26 @@
 package com.nhn.miniwas;
 
 import com.nhn.miniwas.controller.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class HandlerMapping {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(HandlerMapping.class);
-
     private static Map<String, Controller> controllers = new HashMap<>();
+    private static DefaultController defaultController = new DefaultController();
 
     static {
         controllers.put("/index", new HomeController());
-        controllers.put("/Hello", new HelloController());
-        controllers.put("/service.Hello", new HelloController());
-        controllers.put("/Time", new TimeController());
-        controllers.put("/service.Time", new TimeController());
+
+        // spec 6. json Controller_Mapping_List 값에 따라 추가 맵핑 됩니다.
+        if (HttpServer.Controller_Mapping_List != null) {
+            Iterator<String> iterator = HttpServer.Controller_Mapping_List.iterator();
+            while (iterator.hasNext()) {
+                controllers.put("/" + iterator.next(), new TimeController());
+            }
+        }
+
     }
 
     static Controller findController(String url) {
@@ -27,6 +29,6 @@ public class HandlerMapping {
                 return controllers.get(key);
             }
         }
-        return new DefaultController();
+        return defaultController;
     }
 }

@@ -35,10 +35,10 @@ public class HttpRequestUtils {
      * @param 상위 경로 확인, 윈도우 '/', 맥 '\' 개수 리턴 형식
      * @return
      */
-    public static int getRootSeparatorCount(String direcotryRoot) {
+    public static int getRootSeparatorCount(String directoryRoot) {
         String pattern = Pattern.quote(System.getProperty("file.separator"));
-        String[] tokens = direcotryRoot.split(pattern);
-        return tokens.length;
+        String[] tokens = directoryRoot.split(pattern);
+        return tokens.length - 1;
     }
 
     /**

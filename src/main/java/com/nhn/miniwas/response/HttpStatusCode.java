@@ -1,7 +1,7 @@
 package com.nhn.miniwas.response;
 
 public enum HttpStatusCode {
-    // Html 에러 파일 만들때 첫 3글자가 Http Code 이어야 한다.
+    // spec 3. Html 에러 파일 만들때 첫 3글자가 Http Code 이어야 한다.
     OK("200 OK"),
     FOUND("302 Found"),
     UNAUTHORIZED("401 Unauthorized"),
