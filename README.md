@@ -2,6 +2,7 @@
 목적
 ---
 - ### Java로 간단한 WAS(Web Application Server)를 만드는 것
+- ### Java 표준 라이브러리 외 다른 네트워크 프레임워크(예, Netty)를 사용하지 않음
 
 사용 기술
 ---
